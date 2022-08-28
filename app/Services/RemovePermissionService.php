@@ -21,6 +21,21 @@ class RemovePermissionService {
                 'permission'    =>  $permissionId
             ]
         )->delete();
-    }
+    }    
+    
+    /**
+    * 
+    * Remove Permission
+    * 
+    * @param int $relationId
+    * @return bool
+    */
+   public function removeRelationPermission(int $relationId) : bool {
+       return (bool)PermissionRelation::where(
+           [
+               'id'          =>  $relationId
+           ]
+       )->delete();
+   }
 
 }

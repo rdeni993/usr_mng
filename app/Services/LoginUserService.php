@@ -19,7 +19,7 @@ class LoginUserService {
      * @return string  $token
      */
     public function doLogin(LoginRequest $request){
-        return Auth::attempt($request->post())
+        return Auth::attempt($request->only(['username', 'password']))
             
                 ?
 

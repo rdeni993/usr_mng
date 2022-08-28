@@ -32,6 +32,7 @@ class PermissionController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param App\Services\ReturnUserPermissionService $service
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
@@ -44,6 +45,7 @@ class PermissionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param App\Services\RemovePermissionService
      * @param  int  $userId
      * @param  int  $permissionId
      * @return \Illuminate\Http\JsonResponse;
@@ -53,5 +55,19 @@ class PermissionController extends Controller
         $status = ( $service->removePermission($userId, $permissionId)  ? 200 : 406);
 
         return response()->json([], $status);
-    }
+    }    
+    
+    /**
+    * Remove the specified resource from storage.
+    *
+    * @param App\Services\RemovePermissionService
+    * @param  int  $relationId
+    * @return \Illuminate\Http\JsonResponse;
+    */
+   public function destroyRelation(RemovePermissionService $service, int $relationId) : JsonResponse{
+
+       $status = ( $service->removeRelationPermission($relationId)  ? 200 : 406);
+
+       return response()->json([], $status);
+   }
 }
