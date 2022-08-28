@@ -2,7 +2,11 @@
 
 namespace App\Http\Requests;
 
+use Dotenv\Exception\ValidationException;
+use Illuminate\Contracts\Validation\Validator as ValidationValidator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Validator;
 
 class CreateNewUserRequest extends FormRequest
 {
@@ -30,5 +34,11 @@ class CreateNewUserRequest extends FormRequest
             'username'   => 'required|unique:users,username',
             'password'   => 'required|min:8'
         ];
+    }
+
+    public function failedValidation(ValidationValidator $validator){
+        throw new HttpResponseException(response()->json([
+            $validator->errors()
+        ], 406));
     }
 }
