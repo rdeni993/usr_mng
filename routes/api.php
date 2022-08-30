@@ -28,12 +28,15 @@ Route::middleware('auth:sanctum')->get('/me', function (Request $request) {
 Route::post('/signup', [CreateNewUserController::class, 'store']);
 Route::post('/login',  [LoginUserController::class, 'index']);
 
-Route::get('/user/{id}',    [UserController::class, 'show']);
-Route::get('/user',    [UserController::class, 'showAll']);
-Route::patch('/user/{id}',  [UpdateUserController::class, 'update']);
-Route::delete('/user/{id}', [RemoveUserController::class, 'delete']);
 
-Route::post('/permission/{userId}/{permissionId}', [PermissionController::class, 'store']);
-Route::delete('/permission/{userId}/{permissionId}', [PermissionController::class, 'destroy']);
-Route::delete('/permission/{rel}', [PermissionController::class, 'destroyRelation']);
-Route::get('/permission/{userId}', [PermissionController::class, 'show']);
+Route::middleware('auth:sanctum')->group(function(){
+    Route::get('/user/{id}',    [UserController::class, 'show']);
+    Route::get('/user',    [UserController::class, 'showAll']);
+    Route::patch('/user/{id}',  [UpdateUserController::class, 'update']);
+    Route::delete('/user/{id}', [RemoveUserController::class, 'delete']);
+    
+    Route::post('/permission/{userId}/{permissionId}', [PermissionController::class, 'store']);
+    Route::delete('/permission/{userId}/{permissionId}', [PermissionController::class, 'destroy']);
+    Route::delete('/permission/{rel}', [PermissionController::class, 'destroyRelation']);
+    Route::get('/permission/{userId}', [PermissionController::class, 'show']);
+});
